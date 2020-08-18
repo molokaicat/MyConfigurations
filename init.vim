@@ -10,9 +10,9 @@ call g:plug#begin()
   Plug 'nvim-lua/completion-nvim'                                    " better neovim built in lsp completion
 
   "
-  " Utility 
+  " Utility
   "
-  Plug 'preservim/nerdtree' 
+  Plug 'preservim/nerdtree'
   Plug 'jpalardy/vim-slime', { 'for': ['python']}
   Plug 'scrooloose/nerdcommenter'
   Plug 'sbdchd/neoformat'
@@ -25,14 +25,14 @@ call g:plug#begin()
   Plug 'prabirshrestha/async.vim'
 
   "
-  " Spicey 
+  " Spicey
   "
   Plug 'TroyFletcher/vim-colors-synthwave/'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
 
   "
-  " Python 
+  " Python
   "
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['python']}
   Plug 'zchee/deoplete-jedi', { 'for': ['python', 'tex']}
@@ -45,11 +45,9 @@ call g:plug#begin()
   Plug 'fannheyward/coc-texlab', {'do': 'yarn install --frozen-lockfile'}
   Plug 'fannheyward/coc-julia', {'do': 'yarn install --frozen-lockfile'}
   "
-
-
 call g:plug#end()
 
-"julia 
+"julia
 let g:default_julia_version = '1.4'
 " language server
 let g:LanguageClient_autoStart = 1
@@ -60,7 +58,7 @@ let g:LanguageClient_serverCommands = {
 \       import StaticLint;
 \       import SymbolServer;
 \       env_path = dirname(Pkg.Types.Context().env.project_file);
-\       
+\
 \       server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
 \       server.runlinter = true;
 \       run(server);
@@ -70,7 +68,6 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
 
 autocmd BufEnter * lua require'completion'.on_attach()
 
@@ -85,7 +82,7 @@ EOF
 let g:diagnostic_auto_popup_while_jump = 0
 let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_enable_underline = 0
-let g:completion_timer_cycle = 200 "default value is 80 
+let g:completion_timer_cycle = 200 "default value is 80
 
 " Slime (Vim) {{{
  "let g:slime_preserve_curpos = 0
@@ -97,7 +94,7 @@ let g:completion_timer_cycle = 200 "default value is 80
    nmap <Space> <Plug>SlimeLineSend
    "nnoremap <Space> <Plug>SlimeSend1
 " }}}
- 
+
 " NERDtree {{{
    let g:NERDTreeWinPos = 'right'
    let g:NERDTreeQuitOnOpen = 1
@@ -140,7 +137,6 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
-
 let g:vimtex_quickfix_mode=0
 let g:vimtex_quickfix_open_on_warning=0
 let g:vimtex_imaps_leader=1
@@ -149,8 +145,8 @@ let g:vimtex_view_general_options
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
 " Tab through selection
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"  
-  
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
 " Neoformat
 " Enable alignment
 let g:neoformat_basic_format_align = 1
@@ -159,8 +155,7 @@ let g:neoformat_basic_format_align = 1
 let g:neoformat_basic_format_retab = 1
 
 " Enable trimmming of trailing whitespace
-let g:neoformat_basic_format_trim = 1  
-  
+let g:neoformat_basic_format_trim = 1
 
 " Jedi-vim
 " disable autocompletion, cause we use deoplete for completion
@@ -168,12 +163,10 @@ let g:jedi#completions_enabled = 0
 
 " open the go-to function in split, not another buffer
 let g:jedi#use_splits_not_buffers = "right"
-  
-  
-" NeoLint  
+
+" NeoLint
 let g:neomake_python_enabled_makers = ['pylint']
 call neomake#configure#automake('nrwi', 500)
-
 
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -186,21 +179,5 @@ let g:UltiSnipsEditSplit="vertical"
 " auto close window
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-
-
 let g:airline_theme='laederon'
 colorscheme synthwave
-  
-  
-  
-  
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
