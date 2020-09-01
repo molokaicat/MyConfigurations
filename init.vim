@@ -3,7 +3,7 @@ call g:plug#begin()
 " Julia
 "
   Plug 'JuliaEditorSupport/julia-vim'
-"  Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+  Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 "  Plug 'roxma/nvim-completion-manager'  " optional NOTE: this plug in give me a Error detected while processing function <SNR>105_check_changes[21]..cm#snippet#check_and_inject:
   Plug 'neovim/nvim-lsp'
   Plug 'nvim-lua/diagnostic-nvim'                                    " better neovim built in lsp diagnostics
@@ -34,20 +34,27 @@ call g:plug#begin()
   "
   " Python
   "
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['python']}
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['python', 'tex']}
   Plug 'zchee/deoplete-jedi', { 'for': ['python', 'tex']}
   Plug 'davidhalter/jedi-vim', { 'for': ['python', 'tex']}
 
   "
   " CoC
   "
-  Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile', 'for': ['tex']}
+  Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile', 'for': ['tex', 'python']}
   Plug 'fannheyward/coc-texlab', {'do': 'yarn install --frozen-lockfile', 'for': ['tex']}
   "
 
 call g:plug#end()
 
 set hidden " needed for rename
+
+syntax enable
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
 
 "julia
 let g:default_julia_version = '1.4'
@@ -124,8 +131,6 @@ let g:deoplete#enable_at_startup = 1
 "
 let g:tex_flavor = 'latex'
 
-
-
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -139,8 +144,6 @@ set completeopt=menuone,noinsert,noselect
 "" Avoid showing message extra message when using completion
 set shortmess+=c"
 " "
-
-
 
 let g:vimtex_quickfix_mode=0
 let g:vimtex_quickfix_open_on_warning=0
@@ -162,7 +165,6 @@ let g:neoformat_basic_format_retab = 1
 " Enable trimmming of trailing whitespace
 let g:neoformat_basic_format_trim = 1
 
-
 " Jedi-vim
 " disable autocompletion, cause we use deoplete for completion
 let g:jedi#completions_enabled = 0
@@ -170,11 +172,9 @@ let g:jedi#completions_enabled = 0
 " open the go-to function in split, not another buffer
 let g:jedi#use_splits_not_buffers = "right"
 
-
 " NeoLint
 let g:neomake_python_enabled_makers = ['pylint']
 call neomake#configure#automake('nrwi', 500)
-
 
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -187,7 +187,10 @@ let g:UltiSnipsEditSplit="vertical"
 " auto close window
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-
 let g:airline_theme='laederon'
 colorscheme synthwave
 hi Normal guibg=NONE ctermbg=NONE
+
+" to see spaces during typing
+set listchars=eol:↲,tab:▶▹,extends:…,precedes:«,trail:•
+set list
