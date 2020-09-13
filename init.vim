@@ -13,7 +13,7 @@ call g:plug#begin()
   " Utility
   "
   Plug 'preservim/nerdtree'
-  Plug 'jpalardy/vim-slime', { 'for': ['python', 'julia']}
+  Plug 'jpalardy/vim-slime', { 'for': ['python', 'julia', 'sql']}
   Plug 'scrooloose/nerdcommenter'
   Plug 'sbdchd/neoformat'
   Plug 'neomake/neomake'
@@ -49,6 +49,7 @@ call g:plug#end()
 
 set hidden " needed for rename
 
+" Set indentation
 syntax enable
 set smartindent
 set tabstop=4
