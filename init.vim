@@ -3,7 +3,8 @@ call g:plug#begin()
 " Julia
 "
   Plug 'JuliaEditorSupport/julia-vim'
-  Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+  Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh', 'for': ['python']} 
+"  there is an error here autocmd CompleteDone * call LanguageClient#handleCompleteDone()
 "  Plug 'roxma/nvim-completion-manager'  " optional NOTE: this plug in give me a Error detected while processing function <SNR>105_check_changes[21]..cm#snippet#check_and_inject:
   Plug 'neovim/nvim-lsp'
   Plug 'nvim-lua/diagnostic-nvim'                                    " better neovim built in lsp diagnostics
@@ -34,14 +35,14 @@ call g:plug#begin()
   "
   " Python
   "
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['python', 'tex']}
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['python', 'tex', 'julia']}
   Plug 'zchee/deoplete-jedi', { 'for': ['python', 'tex']}
   Plug 'davidhalter/jedi-vim', { 'for': ['python', 'tex']}
 
   "
   " CoC
   "
-  Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile', 'for': ['tex', 'python']}
+  Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile', 'for': ['tex']}
   Plug 'fannheyward/coc-texlab', {'do': 'yarn install --frozen-lockfile', 'for': ['tex']}
   "
 
@@ -58,9 +59,11 @@ set expandtab
 
 
 "julia
-let g:default_julia_version = '1.4'
+let g:default_julia_version = '1.5'
 " language server
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_completionPreferTextEdit = 1
+
 let g:LanguageClient_serverCommands = {
 \   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
 \       using LanguageServer;
@@ -68,7 +71,6 @@ let g:LanguageClient_serverCommands = {
 \       import StaticLint;
 \       import SymbolServer;
 \       env_path = dirname(Pkg.Types.Context().env.project_file);
-\
 \       server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
 \       server.runlinter = true;
 \       run(server);
@@ -137,7 +139,7 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+autocmd! CompleteDonePre * if pumvisible() == 0 | pclose | endif
 
 " " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
@@ -154,7 +156,7 @@ let g:vimtex_view_general_options
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
 " Tab through selection
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Neoformat
 " Enable alignment
@@ -188,10 +190,11 @@ let g:UltiSnipsEditSplit="vertical"
 " auto close window
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-let g:airline_theme='laederon'
-colorscheme synthwave
-hi Normal guibg=NONE ctermbg=NONE
-
 " to see spaces during typing
 set listchars=eol:↲,tab:▶▹,extends:…,precedes:«,trail:•
 set list
+
+let g:airline_theme='laederon'
+let g:impact_transbg=1
+colorscheme synthwave
+hi Normal guibg=NONE ctermbg=NONE
